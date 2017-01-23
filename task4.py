@@ -4,12 +4,10 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy 
 
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dean:dean@localhost/task4'
-
-
 db = SQLAlchemy(app)
-db.create_all()
+
 
 
 class Task4(db.Model):
@@ -21,6 +19,8 @@ class Task4(db.Model):
     message = db.Column(db.String(50))
 
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://dean:dean@localhost/task4'
+db.create_all()
 
 
 @app.route('/')
@@ -33,3 +33,29 @@ def index():
 
 
 app.run(debug=True, port=8000, host='localhost')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
