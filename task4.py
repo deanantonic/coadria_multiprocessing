@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, redirect, render_template, request, url_for
-from flask.ext.sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dean:dean@localhost/task4'
@@ -23,14 +23,10 @@ class Task4(db.Model):
 
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
 def index():
     if request.method == "GET":
         return render_template("main_page.html", task4=Task4.query.all())
-
-    task4 = Task4(content=request.form["contents"])
-    db.session.add(task4)
-    db.session.commit()
     return redirect(url_for('index'))
 
 
