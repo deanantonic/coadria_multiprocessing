@@ -8,8 +8,12 @@ from base64 import b64encode # for urandom
 
 
 
+a = []      # \  
+            #  >   these represent dictionary values / fields    
+b = []      # /
 
 
+msgs = {'process_id': a, 'message': b}   # dictionary represents table 'messages' with process_id and message keys/rows
 
 
 
@@ -17,7 +21,10 @@ def worker1(queue):
 
     while True:
         name = multiprocessing.current_process().name  # name is Process-1
+        post = queue.get()
         print name + ' received ' + queue.get() + ' successfully!'
+        a.append(post) 
+        print a
         
 
 
@@ -57,6 +64,7 @@ def worker2(queue):
         rand = b64encode(rand).decode('utf-8')
         rand = str(rand)       
         queue.put(rand)
+        print name + ' wrote a message!' 
         time.sleep(3)
 
 
