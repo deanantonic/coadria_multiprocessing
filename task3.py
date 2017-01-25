@@ -21,13 +21,22 @@ def worker1(queue):
 
     while True:
         name = multiprocessing.current_process().name  # name is Process-1
-        post = queue.get()
-        print name + ' received ' + queue.get() + ' successfully!'
+
+
+
+        post = queue.get()      # receiving
+        print 'worker1' + ' received ' + post + ' successfully!'
         a.append(post) 
-        print a
+        print 'worker1' + ' received the following messages so far ', a
         
 
 
+        rand = os.urandom(5)     # sending
+        rand = b64encode(rand).decode('utf-8')
+        rand = str(rand)       
+        queue.put(rand)          
+        print name + ' wrote a message! ' + rand
+        time.sleep(30)
 
 
 
@@ -58,16 +67,22 @@ def worker1(queue):
 def worker2(queue):
 
     while True:
-        name = multiprocessing.current_process().name  
-        print name
-        rand = os.urandom(5)
+        name = multiprocessing.current_process().name  # Process-2
+
+
+
+        rand = os.urandom(5)    # sending
         rand = b64encode(rand).decode('utf-8')
         rand = str(rand)       
-        queue.put(rand)
-        print name + ' wrote a message!' 
-        time.sleep(3)
+        queue.put(rand )
+        print name + ' wrote a message! ' + rand 
+        time.sleep(30)
 
-
+    
+        post2 = queue.get()    # receiving
+        print 'worker2' + ' received ' + post2 + ' successfully!'
+        b.append(post2) 
+        print 'worker2' + ' received the following messages so far ', b
 
 
 
